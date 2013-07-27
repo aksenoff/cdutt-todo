@@ -1,7 +1,26 @@
-<h1>Здрасьте</h1>
-<a href="/poll/">Принять участие в голосовании</a> <br />
-<a href="/poll/start/">Запустить голосование</a> <br />
-<a href="/poll/stop/">Остановить голосование</a> <br />
-<a href="/poll/generate/">Сгенерировать тикеты для опроса</a> <br />
-<a href="/poll/stats/">Просмотр статистики</a> <br />
+<h1>Здрасьте, {{ user }}</h1>
+Тудушки для вас: <br />
+<table border="1">
+  <tr>
+    <th>Тудушка</th> <th>Описание</th> <th>Кто посмел</th> <th>Дата</th> <th>Срок</th> <th>Статус</th> <th>Выполнено!</th> 
+  </tr>
+  <tr>
+    <td>1</td> <td>1</td> <td>1</td> <td>1</td> <td>1</td> <td>1</td> <td>1</td>
+  </tr>
+</table>
+
+Ваши тудушки: <br />
+<table border="1">
+  <tr>
+    <th>Тудушка</th> <th>Описание</th> <th>Кому выдано</th> <th>Дата</th> <th>Срок</th> <th>Статус</th> <th>Удалить</th> 
+  </tr>
+{% for todo in todosByMe %}
+  <tr>
+    <td>{{ todo.caption }}</td> <td>{{ todo.description }}</td> <td>{{ todo.doers }}</td> <td>{{ todo.pub_date }}</td> <td>{{ todo.due_date }}</td> <td>{% if todo.status %} v {% else %} - {% endif %}</td> <td><a href="delete/{{ todo.id }}">x</a></td>
+  </tr>
+{% empty %} На этот раз вам повезло. Ничего нет.
+{% endfor %}
+</table>
+
+<a href="/add/">Добавить тудушку</a> <br />
 <a href="/admin/">Панель администрирования</a> <br />

@@ -17,4 +17,7 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^login/', login),
     url(r'^logout/', logout),
+    url(r'^add/', 'todolist.views.add'),
+    url(r'^user/(?P<user_id>\d+)/', 'todolist.views.user'),
+    url(r'^edit/(?P<todo_id>\d+)/', 'todolist.views.edit'),
 )
