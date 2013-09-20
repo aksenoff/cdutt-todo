@@ -5,7 +5,7 @@
 Имя тудушки: <input type="text" name="todocaption"> <br />
 Описание, если не сложно: <input type="text" name="tododescription"> <br />
 Комментарий, если нужно: <input type="text" name="todocomment"> <br />
-Кому: <select name="forwhom">
+Кому: <select multiple name="forwhom">
 {% for user in users %}
 <option value="{{ user.id }}"> {{ user.first_name }} {{ user.last_name }} ({{ user }}) </option>
 {% empty %}

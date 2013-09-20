@@ -9,9 +9,9 @@ import datetime
 
 @login_required(login_url="/login/")
 def index(request):
-  # myTodos = Todo.objects.filter(...)
+  myTodos = Todo.objects.filter(doers=request.user)
   todosByMe = Todo.objects.filter(author=request.user)
-  return render_to_response('index.html', {'user': request.user.username, 'todosByMe': todosByMe})
+  return render_to_response('index.html', {'user': request.user.username, 'myTodos': myTodos, 'todosByMe': todosByMe})
     
 @login_required(login_url="/login/")
 def add(request):
@@ -20,10 +20,14 @@ def add(request):
           'users': User.objects.exclude(username=request.user.username),
           }, context_instance=RequestContext(request))
   else:
+    # assert False, request.POST
     try:
-      Todo.objects.create(caption=request.POST['todocaption'], description=request.POST['tododescription'],
-                          comment=request.POST['todocomment'], author=request.user, pub_date=datetime.datetime.now(),
-                          due_date=datetime.datetime.now())
+      newTodo = Todo.objects.create(caption=request.POST['todocaption'], description=request.POST['tododescription'],
+                                    comment=request.POST['todocomment'], author=request.user, pub_date=datetime.datetime.now(),
+                                    due_date=datetime.datetime.now())
+      for user_id in request.POST.getlist('forwhom'): # you shitty piece of shit
+        newTodo.doers.add(User.objects.get(pk=int(user_id)))
+      newTodo.save()
     except:
       # assert False, request.POST
       return render_to_response('add.html', {
@@ -42,3 +46,8 @@ def user(request, user_id):
 def edit(request, todo_id):
   todo = Todo.objects.get(pk=todo_id)
   return render_to_response('edit.html', {'todo': todo})
+
+@login_required(login_url="/login/")
+def delete(request, todo_id):
+  Todo.objects.get(pk=todo_id).delete()
+  return HttpResponseRedirect('/')
