@@ -49,5 +49,7 @@ def edit(request, todo_id):
 
 @login_required(login_url="/login/")
 def delete(request, todo_id):
-  Todo.objects.get(pk=todo_id).delete()
+  todo = Todo.objects.get(pk=todo_id)
+  if todo.author == request.user:
+    todo.delete()
   return HttpResponseRedirect('/')
