@@ -8,5 +8,5 @@
     <td>1</td> <td>1</td> <td>1</td> <td>1</td> <td>1</td> <td>1</td> <td>1</td>
   </tr>
 </table>
-<a href="/add/">Добавить тудушку (сделать так, чтобы ему)</a> <br />
-<a href="/">Вернуться</a>
+<a href="{% url 'todolist.views.add' %}">Добавить тудушку (сделать так, чтобы ему)</a> <br />
+<a href="{% url 'todolist.views.index' %}">Обратно</a>

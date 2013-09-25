@@ -5,7 +5,7 @@
 Имя тудушки: <input type="text" name="todocaption" value="{{ todo.caption }}"> <br />
 Описание, если не сложно: <input type="text" name="tododescription" value="{{ todo.description }}"> <br />
 Комментарий, если нужно: <input type="text" name="todocomment" value="{{ todo.comment }}"> <br />
-Кому: <select name="forwhom">
+Кому: <select multiple name="forwhom">
 {% for user in users %}
 <option value="{{ user.id }}"> {{ user.first_name }} {{ user.last_name }} ({{ user }}) </option>
 {% empty %}
@@ -14,4 +14,4 @@
 </select> <br />
 <input type="submit" value="OK" />
 </form>
-<a href="/">Обратно</a>
+<a href="{% url 'todolist.views.index' %}">Обратно</a>

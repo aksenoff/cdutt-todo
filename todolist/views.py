@@ -45,11 +45,25 @@ def user(request, user_id):
 @login_required(login_url="/login/")
 def edit(request, todo_id):
   todo = Todo.objects.get(pk=todo_id)
-  return render_to_response('edit.html', {'todo': todo})
+  if todo.author == request.user:
+    if request.method != 'POST':
+      return render_to_response('edit.html', {'todo': todo, 
+                                              'users': User.objects.exclude(username=request.user.username),
+                                              }, context_instance=RequestContext(request))
+    else:
+      todo.caption = request.POST['todocaption']
+      todo.description=request.POST['tododescription']
+      todo.comment=request.POST['todocomment']
+      for user_id in request.POST.getlist('forwhom'):
+        todo.doers.add(User.objects.get(pk=int(user_id)))
+      todo.save()
+      return HttpResponseRedirect('/')
+  return HttpResponseRedirect('/') # not allowed to edit others' todos
+
 
 @login_required(login_url="/login/")
 def delete(request, todo_id):
   todo = Todo.objects.get(pk=todo_id)
   if todo.author == request.user:
     todo.delete()
-  return HttpResponseRedirect('/')
+  return HttpResponseRedirect('/') # not allowed to delete others' todos

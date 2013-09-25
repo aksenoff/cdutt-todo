@@ -6,9 +6,9 @@
   </tr>
 {% for todo in myTodos %}
   <tr>
-    <td>{{ todo.caption }}</td> <td>{{ todo.description }}</td> <td>{{ todo.author }}</td> <td>{% for doer in todo.doers.all %}{{ doer }}{% if not forloop.last %}, {% endif %}{% empty %}-{% endfor %}</td> <td>{{ todo.pub_date }}</td> <td>{{ todo.due_date }}</td> <td>{% if todo.status %} v {% else %} - {% endif %}</td> <td>Кнопко</td>
+    <td><a href="{% url todolist.views.edit todo %}">{{ todo.caption }}</a></td> <td>{{ todo.description }}</td> <td>{{ todo.author }}</td> <td>{% for doer in todo.doers.all %}{{ doer }}{% if not forloop.last %}, {% endif %}{% empty %}-{% endfor %}</td> <td>{{ todo.pub_date }}</td> <td>{{ todo.due_date }}</td> <td>{% if todo.status %} v {% else %} - {% endif %}</td> <td>Кнопко</td>
   </tr>
-{% empty %} На этот раз вам повезло. Ничего нет.
+{% empty %}На этот раз вам повезло. Ничего нет.
 {% endfor %}
 </table>
 
@@ -19,11 +19,11 @@
   </tr>
 {% for todo in todosByMe %}
   <tr>
-    <td>{{ todo.caption }}</td> <td>{{ todo.description }}</td> <td>{% for doer in todo.doers.all %}{{ doer }}{% if not forloop.last %}, {% endif %}{% empty %}-{% endfor %}</td> <td>{{ todo.pub_date }}</td> <td>{{ todo.due_date }}</td> <td>{% if todo.status %} v {% else %} - {% endif %}</td> <td><a href="delete/{{ todo.id }}">x</a></td>
+    <td><a href="{% url 'todolist.views.edit' todo.id %}">{{ todo.caption }}</a></td> <td>{{ todo.description }}</td> <td>{% for doer in todo.doers.all %}{{ doer }}{% if not forloop.last %}, {% endif %}{% empty %}-{% endfor %}</td> <td>{{ todo.pub_date }}</td> <td>{{ todo.due_date }}</td> <td>{% if todo.status %} v {% else %} - {% endif %}</td> <td><a href="{% url 'todolist.views.delete' todo.id %}">x</a></td>
   </tr>
 {% empty %} На этот раз вам повезло. Ничего нет.
 {% endfor %}
 </table>
 
-<a href="/add/">Добавить тудушку</a> <br />
+<a href="{% url 'todolist.views.add' %}">Добавить тудушку</a> <br />
 <a href="/admin/">Панель администрирования</a> <br />
