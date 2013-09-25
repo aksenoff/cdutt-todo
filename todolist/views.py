@@ -45,7 +45,10 @@ def add(request, user_id=None):
 @login_required(login_url="/login/")
 def user(request, user_id):
   user = User.objects.get(pk=user_id)
-  return render_to_response('user.html', {'user': user})
+  userTodos = Todo.objects.filter(doers=user)
+  if request.user == user:
+    return HttpResponseRedirect('/')
+  return render_to_response('user.html', {'user': user, 'todos': userTodos})
   
 @login_required(login_url="/login/")
 def edit(request, todo_id):

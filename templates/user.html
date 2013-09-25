@@ -2,11 +2,14 @@
 Тудушки для товарища {{ user.username }}: <br />
 <table border="1">
   <tr>
-    <th>Тудушка</th> <th>Описание</th> <th>Кто посмел</th> <th>Дата</th> <th>Срок</th> <th>Статус</th> <th>Выполнено!</th> 
+    <th>Тудушка</th> <th>Описание</th> <th>Комментарий</th> <th>Кто посмел</th> <th>Кто выполняет</th> <th>Дата</th> <th>Срок</th> <th>Статус</th>
   </tr>
+{% for todo in todos %}
   <tr>
-    <td>1</td> <td>1</td> <td>1</td> <td>1</td> <td>1</td> <td>1</td> <td>1</td>
+    <td>{{ todo.caption }}</td> <td>{{ todo.description }}</td> <td>{{ todo.comment }}</td> <td>{{ todo.author }}</td> <td>{% for doer in todo.doers.all %}<a href="{% url 'todolist.views.user' doer.id %}">{{ doer }}</a>{% if not forloop.last %}, {% endif %}{% empty %}-{% endfor %}</td> <td>{{ todo.pub_date }}</td> <td>{{ todo.due_date }}</td> <td>{% if todo.status %} v {% else %} - {% endif %}</td>
   </tr>
+{% empty %}На этот раз вам повезло. Ничего нет.
+{% endfor %}
 </table>
 <a href="{% url 'todolist.views.add' user.id %}">Добавить ему тудушку</a> <br />
 <a href="{% url 'todolist.views.index' %}">Обратно</a>
