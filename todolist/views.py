@@ -14,8 +14,13 @@ def index(request):
   return render_to_response('index.html', {'user': request.user.username, 'myTodos': myTodos, 'todosByMe': todosByMe})
     
 @login_required(login_url="/login/")
-def add(request):
+def add(request, user_id=None):
   if request.method != 'POST':
+    if user_id:
+      return render_to_response('add.html', {
+            'users': User.objects.exclude(username=request.user.username),
+            'doer': User.objects.get(pk=user_id),
+            }, context_instance=RequestContext(request))
     return render_to_response('add.html', {
           'users': User.objects.exclude(username=request.user.username),
           }, context_instance=RequestContext(request))
@@ -40,7 +45,7 @@ def add(request):
 @login_required(login_url="/login/")
 def user(request, user_id):
   user = User.objects.get(pk=user_id)
-  return render_to_response('user.html', {'user': user.username})
+  return render_to_response('user.html', {'user': user})
   
 @login_required(login_url="/login/")
 def edit(request, todo_id):

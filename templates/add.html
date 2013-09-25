@@ -7,7 +7,7 @@
 Комментарий, если нужно: <input type="text" name="todocomment"> <br />
 Кому: <select multiple name="forwhom">
 {% for user in users %}
-<option value="{{ user.id }}"> {{ user.first_name }} {{ user.last_name }} ({{ user }}) </option>
+<option {% ifequal doer.id user.id %}selected{% endifequal %} value="{{ user.id }}"> {{ user.first_name }} {{ user.last_name }} ({{ user }}) </option>
 {% empty %}
 <option> Нет </option>
 {% endfor %}

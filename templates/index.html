@@ -6,7 +6,7 @@
   </tr>
 {% for todo in myTodos %}
   <tr>
-    <td><a href="{% url todolist.views.edit todo %}">{{ todo.caption }}</a></td> <td>{{ todo.description }}</td> <td>{{ todo.author }}</td> <td>{% for doer in todo.doers.all %}{{ doer }}{% if not forloop.last %}, {% endif %}{% empty %}-{% endfor %}</td> <td>{{ todo.pub_date }}</td> <td>{{ todo.due_date }}</td> <td>{% if todo.status %} v {% else %} - {% endif %}</td> <td>Кнопко</td>
+    <td>{{ todo.caption }}</td> <td>{{ todo.description }}</td> <td>{{ todo.author }}</td> <td>{% for doer in todo.doers.all %}{{ doer }}{% if not forloop.last %}, {% endif %}{% empty %}-{% endfor %}</td> <td>{{ todo.pub_date }}</td> <td>{{ todo.due_date }}</td> <td>{% if todo.status %} v {% else %} - {% endif %}</td> <td>Кнопко</td>
   </tr>
 {% empty %}На этот раз вам повезло. Ничего нет.
 {% endfor %}

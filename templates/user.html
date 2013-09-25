@@ -1,5 +1,5 @@
-<h1>{{ user }}</h1>
-Тудушки для товарища {{ user }}: <br />
+<h1>{{ user.username }}</h1>
+Тудушки для товарища {{ user.username }}: <br />
 <table border="1">
   <tr>
     <th>Тудушка</th> <th>Описание</th> <th>Кто посмел</th> <th>Дата</th> <th>Срок</th> <th>Статус</th> <th>Выполнено!</th> 
@@ -8,5 +8,5 @@
     <td>1</td> <td>1</td> <td>1</td> <td>1</td> <td>1</td> <td>1</td> <td>1</td>
   </tr>
 </table>
-<a href="{% url 'todolist.views.add' %}">Добавить тудушку (сделать так, чтобы ему)</a> <br />
+<a href="{% url 'todolist.views.add' user.id %}">Добавить ему тудушку</a> <br />
 <a href="{% url 'todolist.views.index' %}">Обратно</a>
