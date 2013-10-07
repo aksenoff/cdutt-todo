@@ -66,6 +66,7 @@ def edit(request, todo_id):
       todo.comment = request.POST['todocomment']
       for user_id in request.POST.getlist('forwhom'):
         todo.doers.add(User.objects.get(pk=user_id))
+      todo.due_date = request.POST['duedate']
       todo.save()
       return HttpResponseRedirect('/')
   return HttpResponseRedirect('/') # not allowed to edit others' todos
