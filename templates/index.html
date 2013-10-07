@@ -35,7 +35,7 @@
     </tr>
   {% for todo in todosByMe %}
     <tr>
-      <td><a href="{% url 'todolist.views.edit' todo.id %}">{{ todo.caption }}</a></td> <td>{{ todo.description }}</td> <td>{{ todo.comment }}</td> <td>{% for doer in todo.doers.all %}<a href="{% url 'todolist.views.user' doer.id %}">{{ doer }}</a>{% if not forloop.last %}, {% endif %}{% empty %}-{% endfor %}</td> <td>{{ todo.pub_date }}</td> <td>{{ todo.due_date }}</td> <td>{% if todo.status %} v {% else %} - {% endif %}</td> <td><a href="{% url 'todolist.views.delete' todo.id %}">x</a></td>
+      <td><a href="{% url 'todolist.views.edit' todo.id %}">{{ todo.caption }}</a></td> <td>{{ todo.description }}</td> <td>{{ todo.comment }}</td> <td>{% for doer in todo.doers.all %}<a href="{% url 'todolist.views.user' doer.id %}">{{ doer }}</a>{% if not forloop.last %}, {% endif %}{% empty %}-{% endfor %}</td> <td>{{ todo.pub_date }}</td> <td>{{ todo.due_date }}</td> <td>{% if todo.done %} v {% else %} - {% endif %}</td> <td><a href="{% url 'todolist.views.delete' todo.id %}">x</a></td>
     </tr>
   {% empty %} Гуманный вы. Ничего нет.
   {% endfor %}
