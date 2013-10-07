@@ -1,14 +1,27 @@
 <h1>Здрасьте, {{ user }}</h1>
-Тудушки для вас: <br />
+Невыполненные тудушки для вас: <br />
 <table border="1">
   <tr>
-    <th>Тудушка</th> <th>Описание</th> <th>Комментарий</th> <th>Кто посмел</th> <th>Кто выполняет</th> <th>Дата</th> <th>Срок</th> <th>Статус</th> <th>Выполнено!</th> 
+    <th>Тудушка</th> <th>Описание</th> <th>Комментарий</th> <th>Кто посмел</th> <th>Кто выполняет</th> <th>Дата</th> <th>Срок</th> <th>Выполнено!</th> 
   </tr>
 {% for todo in myTodos %}
   <tr>
-    <td>{{ todo.caption }}</td> <td>{{ todo.description }}</td> <td>{{ todo.comment }}</td> <td>{{ todo.author }}</td> <td>{% for doer in todo.doers.all %}<a href="{% url 'todolist.views.user' doer.id %}">{{ doer }}</a>{% if not forloop.last %}, {% endif %}{% empty %}-{% endfor %}</td> <td>{{ todo.pub_date }}</td> <td>{{ todo.due_date }}</td> <td>{% if todo.status %} v {% else %} - {% endif %}</td> <td>Кнопко</td>
+    <td>{{ todo.caption }}</td> <td>{{ todo.description }}</td> <td>{{ todo.comment }}</td> <td>{{ todo.author }}</td> <td>{% for doer in todo.doers.all %}<a href="{% url 'todolist.views.user' doer.id %}">{{ doer }}</a>{% if not forloop.last %}, {% endif %}{% empty %}-{% endfor %}</td> <td>{{ todo.pub_date }}</td> <td>{{ todo.due_date }}</td><td><a href="{% url 'todolist.views.submit' todo.id %}">v</a></td>
   </tr>
 {% empty %}На этот раз вам повезло. Ничего нет.
+{% endfor %}
+</table>
+
+Архив выполненного вами: <br />
+<table border="1">
+  <tr>
+    <th>Тудушка</th> <th>Описание</th> <th>Комментарий</th> <th>Кто посмел</th> <th>Кто выполняет</th> <th>Дата</th> <th>Срок</th> 
+  </tr>
+{% for todo in myPastTodos %}
+  <tr>
+    <td>{{ todo.caption }}</td> <td>{{ todo.description }}</td> <td>{{ todo.comment }}</td> <td>{{ todo.author }}</td> <td>{% for doer in todo.doers.all %}<a href="{% url 'todolist.views.user' doer.id %}">{{ doer }}</a>{% if not forloop.last %}, {% endif %}{% empty %}-{% endfor %}</td> <td>{{ todo.pub_date }}</td> <td>{{ todo.due_date }}</td>
+  </tr>
+{% empty %}Ничего нет.
 {% endfor %}
 </table>
 

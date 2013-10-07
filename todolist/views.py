@@ -9,10 +9,11 @@ import datetime
 
 @login_required(login_url="/login/")
 def index(request):
-  myTodos = Todo.objects.filter(doers=request.user)
+  myTodos = Todo.objects.filter(doers=request.user, done=False)
+  myPastTodos = Todo.objects.filter(doers=request.user, done=True)
   todosByMe = Todo.objects.filter(author=request.user)
-  return render_to_response('index.html', {'user': request.user.username, 'myTodos': myTodos, 'todosByMe': todosByMe})
-    
+  return render_to_response('index.html', {'user': request.user.username, 'myTodos': myTodos, 'myPastTodos': myPastTodos, 'todosByMe': todosByMe})
+
 @login_required(login_url="/login/")
 def add(request, user_id=None):
   if request.method != 'POST':
@@ -45,10 +46,11 @@ def add(request, user_id=None):
 @login_required(login_url="/login/")
 def user(request, user_id):
   user = User.objects.get(pk=user_id)
-  userTodos = Todo.objects.filter(doers=user)
+  userTodos = Todo.objects.filter(doers=user, done=False)
+  userDoneTodos = Todo.objects.filter(doers=user, done=True)
   if request.user == user:
     return HttpResponseRedirect('/')
-  return render_to_response('user.html', {'user': user, 'todos': userTodos})
+  return render_to_response('user.html', {'user': user, 'todos': userTodos, 'doneTodos': userDoneTodos})
   
 @login_required(login_url="/login/")
 def edit(request, todo_id):
@@ -60,14 +62,13 @@ def edit(request, todo_id):
                                               }, context_instance=RequestContext(request))
     else:
       todo.caption = request.POST['todocaption']
-      todo.description=request.POST['tododescription']
-      todo.comment=request.POST['todocomment']
+      todo.description = request.POST['tododescription']
+      todo.comment = request.POST['todocomment']
       for user_id in request.POST.getlist('forwhom'):
-        todo.doers.add(User.objects.get(pk=int(user_id)))
+        todo.doers.add(User.objects.get(pk=user_id))
       todo.save()
       return HttpResponseRedirect('/')
   return HttpResponseRedirect('/') # not allowed to edit others' todos
-
 
 @login_required(login_url="/login/")
 def delete(request, todo_id):
@@ -75,3 +76,11 @@ def delete(request, todo_id):
   if todo.author == request.user:
     todo.delete()
   return HttpResponseRedirect('/') # not allowed to delete others' todos
+
+@login_required(login_url="/login/")
+def submit(request, todo_id=None):
+  todo = Todo.objects.get(pk=todo_id)
+  if request.user in todo.doers.all():
+    todo.done = True
+    todo.save()
+  return HttpResponseRedirect('/')

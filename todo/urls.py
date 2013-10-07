@@ -22,4 +22,5 @@ urlpatterns = patterns('',
     url(r'^user/(?P<user_id>\d+)/', 'todolist.views.user'),
     url(r'^edit/(?P<todo_id>\d+)/', 'todolist.views.edit'),
     url(r'^delete/(?P<todo_id>\d+)/', 'todolist.views.delete'),
+    url(r'^submit/(?P<todo_id>\d+)/', 'todolist.views.submit'),
 )
