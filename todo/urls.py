@@ -16,7 +16,7 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
     url(r'^login/', login),
-    url(r'^logout/', logout),
+    url(r'^logout/', logout, {'next_page': '/'}),
     url(r'^add/$', 'todolist.views.add'),
     url(r'^add/(?P<user_id>\d+)/', 'todolist.views.add'),
     url(r'^user/(?P<user_id>\d+)/', 'todolist.views.user'),

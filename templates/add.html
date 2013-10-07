@@ -5,34 +5,28 @@
   {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
   <form action="." method="post">
   {% csrf_token %}
-  <div class="form-group">
-      <div class="form-group">
-          <label for="todocaption">Имя тудушки:</label>
-          <input class="form-control" type="text" name="todocaption">
-      </div>
-      <div class="form-group">
-          <label for="tododescription">Описание, если не сложно:</label>
-          <input class="form-control" type="text" name="tododescription">
-      </div>
-      <div class="form-group">
-          <label for="todocomment">Комментарий, если нужно:</label>
-          <input type="text" class="form-control" name="todocomment">
-      </div>
-      <div class="form-group">
-          <label for="forwhom">Кому:</label>
-          <select multiple class="form-control" name="forwhom">
-          {% for user in users %}
-              <option {% ifequal doer.id user.id %}selected{% endifequal %} value="{{ user.id }}"> {{ user.first_name }} {{ user.last_name }} ({{ user }}) </option>
-          {% empty %}
-              <option> Нет </option>
-          {% endfor %}
-          </select>
-      </div>
-      <div class="form-group">
-          <label for="duedate">Дата выполнения:</label>
-          <input size="16" type="text" class="form-control form_datetime" value="" name="duedate">
-      </div>
-      <input class="btn btn-default" type="submit" value="OK" />
+  <label for="todocaption">Имя тудушки:</label>
+    <input class="input-large" type="text" name="todocaption" maxlength="25">
+    <span class="help-block">Максимум 25 символов. Это имя пользователи будут видеть в списке. Желательно сделать его коротким, но выразительным.</span>
+    <label for="tododescription">Описание, если не сложно:</label>
+    <textarea rows="2" class="input-xxlarge" name="tododescription"></textarea>
+    <span class="help-block">Этот текст должен разъяснять детали. Он может быть произвольной длины.</span>
+    <label for="todocomment">Комментарий, если нужно:</label>
+    <textarea rows="2" class="input-xxlarge" name="todocomment"></textarea>
+    <span class="help-block">Вам еще есть что сказать? Это ваш шанс.</span>
+    <label for="forwhom">Кому:</label>
+    <select multiple class="span4" name="forwhom">
+    {% for user in users %}
+        <option {% ifequal doer.id user.id %}selected{% endifequal %} value="{{ user.id }}"> {{ user.first_name }} {{ user.last_name }} ({{ user }}) </option>
+    {% empty %}
+        <option> Нет </option>
+    {% endfor %}
+    </select>
+    <span class="help-block">Есть возможность выделить сразу несколько жертв, если зажать Ctrl.</span>
+    <label for="duedate">Крайняя дата выполнения:</label>
+    <input size="16" type="text" class="form_datetime">
+    <span class="help-block">Когда наступает крайний срок для данной задачи?</span>
+    <input class="btn" type="submit" value="Добавить" />
   </form>
   <a href="{% url 'todolist.views.index' %}">Обратно</a>
       <script type="text/javascript">
