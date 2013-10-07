@@ -29,8 +29,8 @@ def add(request, user_id=None):
     # assert False, request.POST
     try:
       newTodo = Todo.objects.create(caption=request.POST['todocaption'], description=request.POST['tododescription'],
-                                    comment=request.POST['todocomment'], author=request.user, pub_date=datetime.datetime.now(),
-                                    due_date=datetime.datetime.now())
+                                    comment=request.POST['todocomment'], author=request.user, pub_date=datetime.datetime.now().replace(microsecond=0),
+                                    due_date=request.POST['duedate'])
       for user_id in request.POST.getlist('forwhom'): # you shitty piece of shit
         newTodo.doers.add(User.objects.get(pk=int(user_id)))
       newTodo.save()
