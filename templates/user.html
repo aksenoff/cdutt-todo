@@ -9,7 +9,7 @@
       </tr>
     {% for todo in todos %}
       <tr>
-        <td>{{ todo.caption }}</td> <td>{{ todo.description }}</td> <td>{{ todo.comment }}</td> <td>{{ todo.author }}</td> <td>{% for doer in todo.doers.all %}<a href="{% url 'todolist.views.user' doer.id %}">{{ doer }}</a>{% if not forloop.last %}, {% endif %}{% empty %}-{% endfor %}</td> <td>{{ todo.pub_date }}</td> <td>{{ todo.due_date }}</td> <td>{% if todo.status %} v {% else %} - {% endif %}</td>
+        <td>{{ todo.caption }}</td> <td>{{ todo.description }}</td> <td>{{ todo.comment }}</td> <td><a href="{% url 'todolist.views.user' todo.author.id %}">{{ todo.author }}</a></td> <td>{% for doer in todo.doers.all %}<a href="{% url 'todolist.views.user' doer.id %}">{{ doer }}</a>{% if not forloop.last %}, {% endif %}{% empty %}-{% endfor %}</td> <td>{{ todo.pub_date }}</td> <td>{{ todo.due_date }}</td> <td>{% if todo.status %} v {% else %} - {% endif %}</td>
       </tr>
     {% empty %}Ничего нет.
     {% endfor %}

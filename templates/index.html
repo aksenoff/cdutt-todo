@@ -9,7 +9,7 @@
     </tr>
   {% for todo in myTodos %}
     <tr>
-      <td>{{ todo.caption }}</td> <td>{{ todo.description }}</td> <td>{{ todo.comment }}</td> <td>{{ todo.author }}</td> <td>{% for doer in todo.doers.all %}<a href="{% url 'todolist.views.user' doer.id %}">{{ doer }}</a>{% if not forloop.last %}, {% endif %}{% empty %}-{% endfor %}</td> <td>{{ todo.pub_date }}</td> <td>{{ todo.due_date }}</td><td><a href="{% url 'todolist.views.submit' todo.id %}">v</a></td>
+      <td>{{ todo.caption }}</td> <td>{{ todo.description }}</td> <td>{{ todo.comment }}</td> <td><a href="{% url 'todolist.views.user' todo.author.id %}">{{ todo.author }}</a></td> <td>{% for doer in todo.doers.all %}<a href="{% url 'todolist.views.user' doer.id %}">{{ doer }}</a>{% if not forloop.last %}, {% endif %}{% empty %}-{% endfor %}</td> <td>{{ todo.pub_date }}</td> <td>{{ todo.due_date }}</td><td><a href="{% url 'todolist.views.submit' todo.id %}">v</a></td>
     </tr>
   {% empty %}На этот раз вам повезло. Ничего нет.
   {% endfor %}
@@ -22,7 +22,7 @@
     </tr>
   {% for todo in myPastTodos %}
     <tr>
-      <td>{{ todo.caption }}</td> <td>{{ todo.description }}</td> <td>{{ todo.comment }}</td> <td>{{ todo.author }}</td> <td>{% for doer in todo.doers.all %}<a href="{% url 'todolist.views.user' doer.id %}">{{ doer }}</a>{% if not forloop.last %}, {% endif %}{% empty %}-{% endfor %}</td> <td>{{ todo.pub_date }}</td> <td>{{ todo.due_date }}</td>
+      <td>{{ todo.caption }}</td> <td>{{ todo.description }}</td> <td>{{ todo.comment }}</td> <td><a href="{% url 'todolist.views.user' todo.author.id %}">{{ todo.author }}</a></td> <td>{% for doer in todo.doers.all %}<a href="{% url 'todolist.views.user' doer.id %}">{{ doer }}</a>{% if not forloop.last %}, {% endif %}{% empty %}-{% endfor %}</td> <td>{{ todo.pub_date }}</td> <td>{{ todo.due_date }}</td>
     </tr>
   {% empty %}Ничего нет.
   {% endfor %}
