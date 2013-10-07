@@ -1,6 +1,6 @@
 # Django settings for todo project.
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
@@ -151,3 +151,5 @@ LOGGING = {
         },
     }
 }
+
+LOGIN_REDIRECT_URL = "/"

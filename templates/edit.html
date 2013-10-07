@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %} Добавить {% endblock %}
+{% block title %} Редактировать {{ todo.caption }} {% endblock %}
 {% block content %}
   <h1>Редактируем тудушку {{ todo.caption }}</h1>
   {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
