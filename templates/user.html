@@ -1,31 +1,38 @@
 {% extends "base.html" %}
 {% block title %} Пользователь {{ user.username }} {% endblock %}
 {% block content %}
-    <h1>{{ user.username }}</h1>
-    Текущие тудушки для товарища {{ user.username }}: <br />
+  <h1>{{ user.username }}</h1>
+  <h4>Текущие тудушки для товарища {{ user.username }}:</h4>
+    {% if todos %}
+      <table border="1">
+        <tr>
+          <th>Тудушка</th> <th>Описание</th> <th>Комментарий</th> <th>Кто посмел</th> <th>Кто выполняет</th> <th>Дата</th> <th>Срок</th>
+        </tr>
+      {% for todo in todos %}
+        <tr>
+          <td>{{ todo.caption }}</td> <td>{{ todo.description }}</td> <td>{{ todo.comment }}</td> <td><a href="{% url 'todolist.views.user' todo.author.id %}">{{ todo.author }}</a></td> <td>{% for doer in todo.doers.all %}<a href="{% url 'todolist.views.user' doer.id %}">{{ doer }}</a>{% if not forloop.last %}, {% endif %}{% empty %}-{% endfor %}</td> <td>{{ todo.pub_date }}</td> <td>{{ todo.due_date }}</td>
+        </tr>
+      {% endfor %}
+      </table>
+  {% else %}
+    Ничего нет.
+  {% endif %}
+  <h4>Выполненные тудушки товарища {{ user.username }}:</h4>
+  {% if doneTodos %}
     <table border="1">
       <tr>
         <th>Тудушка</th> <th>Описание</th> <th>Комментарий</th> <th>Кто посмел</th> <th>Кто выполняет</th> <th>Дата</th> <th>Срок</th>
       </tr>
-    {% for todo in todos %}
-      <tr>
-        <td>{{ todo.caption }}</td> <td>{{ todo.description }}</td> <td>{{ todo.comment }}</td> <td><a href="{% url 'todolist.views.user' todo.author.id %}">{{ todo.author }}</a></td> <td>{% for doer in todo.doers.all %}<a href="{% url 'todolist.views.user' doer.id %}">{{ doer }}</a>{% if not forloop.last %}, {% endif %}{% empty %}-{% endfor %}</td> <td>{{ todo.pub_date }}</td> <td>{{ todo.due_date }}</td>
-      </tr>
-    {% empty %}Ничего нет.
-    {% endfor %}
+      {% for todo in doneTodos %}
+        <tr>
+          <td>{{ todo.caption }}</td> <td>{{ todo.description }}</td> <td>{{ todo.comment }}</td> <td>{{ todo.author }}</td> <td>{% for doer in todo.doers.all %}<a href="{% url 'todolist.views.user' doer.id %}">{{ doer }}</a>{% if not forloop.last %}, {% endif %}{% empty %}-{% endfor %}</td> <td>{{ todo.pub_date }}</td> <td>{{ todo.due_date }}</td>
+        </tr>
+      {% endfor %}
     </table>
-    Выполненные тудушки товарища {{ user.username }}: <br />
-    <table border="1">
-      <tr>
-        <th>Тудушка</th> <th>Описание</th> <th>Комментарий</th> <th>Кто посмел</th> <th>Кто выполняет</th> <th>Дата</th> <th>Срок</th>
-      </tr>
-    {% for todo in doneTodos %}
-      <tr>
-        <td>{{ todo.caption }}</td> <td>{{ todo.description }}</td> <td>{{ todo.comment }}</td> <td>{{ todo.author }}</td> <td>{% for doer in todo.doers.all %}<a href="{% url 'todolist.views.user' doer.id %}">{{ doer }}</a>{% if not forloop.last %}, {% endif %}{% empty %}-{% endfor %}</td> <td>{{ todo.pub_date }}</td> <td>{{ todo.due_date }}</td>
-      </tr>
-    {% empty %}Ничего нет.
-    {% endfor %}
-    </table>
-    <a href="{% url 'todolist.views.add' user.id %}">Добавить ему тудушку</a> <br />
-    <a href="{% url 'todolist.views.index' %}">Обратно</a>
+  {% else %}
+    Ничего нет.
+  {% endif %}
+  <br />
+  <a href="{% url 'todolist.views.add' user.id %}">Добавить ему тудушку</a> <br />
+  <a href="{% url 'todolist.views.index' %}">Обратно</a>
 {% endblock %}

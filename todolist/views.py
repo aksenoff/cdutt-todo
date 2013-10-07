@@ -12,7 +12,10 @@ def index(request):
   myTodos = Todo.objects.filter(doers=request.user, done=False)
   myPastTodos = Todo.objects.filter(doers=request.user, done=True)
   todosByMe = Todo.objects.filter(author=request.user)
-  return render_to_response('index.html', {'user': request.user.username, 'myTodos': myTodos, 'myPastTodos': myPastTodos, 'todosByMe': todosByMe})
+  return render_to_response('index.html', {'user': request.user.username,
+                                          'myTodos': myTodos if len(myTodos) else None,
+                                          'myPastTodos': myPastTodos if len(myPastTodos) else None,
+                                          'todosByMe': todosByMe if len(todosByMe) else None})
 
 @login_required(login_url="/login/")
 def add(request, user_id=None):
@@ -50,7 +53,9 @@ def user(request, user_id):
   userDoneTodos = Todo.objects.filter(doers=user, done=True)
   if request.user == user:
     return HttpResponseRedirect('/')
-  return render_to_response('user.html', {'user': user, 'todos': userTodos, 'doneTodos': userDoneTodos})
+  return render_to_response('user.html', {'user': user,
+                                          'todos': userTodos if len(userTodos) else None,
+                                          'doneTodos': userDoneTodos if len(userDoneTodos) else None})
   
 @login_required(login_url="/login/")
 def edit(request, todo_id):
