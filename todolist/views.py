@@ -12,7 +12,7 @@ def index(request):
   myTodos = Todo.objects.filter(doers=request.user, done=False)
   myPastTodos = Todo.objects.filter(doers=request.user, done=True)
   todosByMe = Todo.objects.filter(author=request.user)
-  return render_to_response('index.html', {'user': request.user.username,
+  return render_to_response('index.html', {'user': request.user,
                                           'myTodos': myTodos if len(myTodos) else None,
                                           'myPastTodos': myPastTodos if len(myPastTodos) else None,
                                           'todosByMe': todosByMe if len(todosByMe) else None})
