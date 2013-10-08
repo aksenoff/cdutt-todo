@@ -26,7 +26,9 @@
     <label for="duedate">Крайняя дата выполнения:</label>
     <input size="16" type="text" class="form_datetime" value="{{ todo.due_date|date:'Y-m-d H:i' }}" name="duedate">
     <span class="help-block">Когда наступает крайний срок для данной задачи?</span>
-    <input class="btn" type="submit" value="Сохранить" />
+    <button class="btn" type="submit">
+      <i class="icon-thumbs-up"></i> Сохранить
+    </button>
   </form>
   <a href="{% url 'todolist.views.index' %}">Обратно</a>
       <script type="text/javascript">

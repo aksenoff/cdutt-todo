@@ -5,12 +5,12 @@
   <hr />
   <h4>Невыполненные тудушки для вас:</h4>
   {% if myTodos %}
-    <table border="1">
+    <table class="table table-hover">
       <tr>
         <th>Тудушка</th> <th>Описание</th> <th>Комментарий</th> <th>Кто посмел</th> <th>Кто выполняет</th> <th>Дата</th> <th>Срок</th> <th>Выполнено!</th> 
       </tr>
     {% for todo in myTodos %}
-      <tr>
+      <tr class="error">
         <td>{{ todo.caption }}</td> <td>{{ todo.description }}</td> <td>{{ todo.comment }}</td> <td><a href="{% url 'todolist.views.user' todo.author.id %}">{{ todo.author }}</a></td> <td>{% for doer in todo.doers.all %}<a href="{% url 'todolist.views.user' doer.id %}">{{ doer }}</a>{% if not forloop.last %}, {% endif %}{% empty %}-{% endfor %}</td> <td>{{ todo.pub_date }}</td> <td>{{ todo.due_date }}</td><td><a href="{% url 'todolist.views.submit' todo.id %}">v</a></td>
       </tr>
     {% endfor %}
@@ -22,12 +22,12 @@
 
   <h4>Архив выполненного вами:</h4>
   {% if myPastTodos %}
-    <table border="1">
+    <table class="table table-hover">
       <tr>
         <th>Тудушка</th> <th>Описание</th> <th>Комментарий</th> <th>Кто посмел</th> <th>Кто выполняет</th> <th>Дата</th> <th>Срок</th> 
       </tr>
     {% for todo in myPastTodos %}
-      <tr>
+      <tr class="success">
         <td>{{ todo.caption }}</td> <td>{{ todo.description }}</td> <td>{{ todo.comment }}</td> <td><a href="{% url 'todolist.views.user' todo.author.id %}">{{ todo.author }}</a></td> <td>{% for doer in todo.doers.all %}<a href="{% url 'todolist.views.user' doer.id %}">{{ doer }}</a>{% if not forloop.last %}, {% endif %}{% empty %}-{% endfor %}</td> <td>{{ todo.pub_date }}</td> <td>{{ todo.due_date }}</td>
       </tr>
     {% endfor %}
@@ -39,12 +39,12 @@
 
   <h4>Тудушки вашего авторства:</h4>
   {% if todosByMe %}
-    <table border="1">
+    <table class="table table-hover">
       <tr>
         <th>Тудушка</th> <th>Описание</th> <th>Комментарий</th> <th>Кому выдано</th> <th>Дата</th> <th>Срок</th> <th>Статус</th> <th>Удалить</th> 
       </tr>
     {% for todo in todosByMe %}
-      <tr>
+      <tr class="{% if todo.done %}success{% else %}error{% endif %}">
         <td><a href="{% url 'todolist.views.edit' todo.id %}">{{ todo.caption }}</a></td> <td>{{ todo.description }}</td> <td>{{ todo.comment }}</td> <td>{% for doer in todo.doers.all %}<a href="{% url 'todolist.views.user' doer.id %}">{{ doer }}</a>{% if not forloop.last %}, {% endif %}{% empty %}-{% endfor %}</td> <td>{{ todo.pub_date }}</td> <td>{{ todo.due_date }}</td> <td>{% if todo.done %} v {% else %} - {% endif %}</td> <td><a href="{% url 'todolist.views.delete' todo.id %}">x</a></td>
       </tr>
     {% endfor %}

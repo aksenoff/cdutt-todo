@@ -24,9 +24,11 @@
     </select>
     <span class="help-block">Есть возможность выделить сразу несколько жертв, если зажать Ctrl.</span>
     <label for="duedate">Крайняя дата выполнения:</label>
-    <input size="16" type="text" class="form_datetime">
+    <input size="16" type="text" class="form_datetime" name="duedate">
     <span class="help-block">Когда наступает крайний срок для данной задачи?</span>
-    <input class="btn" type="submit" value="Добавить" />
+    <button class="btn" type="submit">
+      <i class="icon-ok"></i> Добавить
+    </button>
   </form>
   <a href="{% url 'todolist.views.index' %}">Обратно</a>
       <script type="text/javascript">
