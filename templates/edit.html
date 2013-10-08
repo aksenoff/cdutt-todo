@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 {% block title %} Редактировать {{ todo.caption }} {% endblock %}
 {% block content %}
-  <h1>Редактируем тудушку {{ todo.caption }}</h1>
+  <h1>редактирование задачи {{ todo.caption }}</h1>
   {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
   <form action="." method="post">
     {% csrf_token %}
-    <label for="todocaption">Имя тудушки:</label>
+    <label for="todocaption">Название задачи:</label>
     <input class="input-large" type="text" name="todocaption" value="{{ todo.caption }}" maxlength="25">
     <span class="help-block">Максимум 25 символов. Это имя пользователи будут видеть в списке. Желательно сделать его коротким, но выразительным.</span>
     <label for="tododescription">Описание, если не сложно:</label>
@@ -14,7 +14,7 @@
     <label for="todocomment">Комментарий, если нужно:</label>
     <textarea rows="2" class="input-xxlarge" name="todocomment">{{ todo.comment }}</textarea>
     <span class="help-block">Вам еще есть что сказать? Это ваш шанс.</span>
-    <label for="forwhom">Кому:</label>
+    <label for="forwhom">Кому назначено выполнение:</label>
     <select class="span4" multiple name="forwhom">
     {% for user in users %}
         <option {% if user in todo.doers.all %}selected{% endif %} value="{{ user.id }}"> {{ user.first_name }} {{ user.last_name }} ({{ user }}) </option>
@@ -30,7 +30,7 @@
       <i class="icon-thumbs-up"></i> Сохранить
     </button>
   </form>
-  <a href="{% url 'todolist.views.index' %}">Обратно</a>
+  <a href="{% url 'todolist.views.index' %}">На главную</a>
   <br />
   <script type="text/javascript">
     $('.form_datetime').datetimepicker({

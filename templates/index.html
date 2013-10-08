@@ -1,13 +1,14 @@
 {% extends "base.html" %}
-{% block title %} Главная {% endblock %}
+{% block title %} Менеджер задач сотрудников ЦДЮТТ {% endblock %}
 {% block content %}
-  <h1>Здрасьте, {{ user }}</h1>
+  <h1>Менеджер задач сотрудников ЦДЮТТ</h1>
+  <h3>Здравствуйте, {{ user.first_name }} {{ user.last_name }} ({{ user }})</h3>
   <hr />
-  <h4>Невыполненные тудушки для вас:</h4>
+  <h4>Невыполненные задачи, назначенные вам:</h4>
   {% if myTodos %}
     <table class="table table-hover">
       <tr>
-        <th>Тудушка</th> <th>Описание</th> <th>Комментарий</th> <th>Кто посмел</th> <th>Кто выполняет</th> <th>Дата</th> <th>Срок</th> <th>Выполнить</th> 
+        <th>Название</th> <th>Описание</th> <th>Комментарий</th> <th>Автор</th> <th>Исполнитель</th> <th>Дата</th> <th>Срок</th> <th>Выполнить</th> 
       </tr>
     {% for todo in myTodos %}
       <tr class="error">
@@ -20,11 +21,11 @@
   {% endif %}
   <hr />
 
-  <h4>Архив выполненного вами:</h4>
+  <h4>Архив выполненных вами задач:</h4>
   {% if myPastTodos %}
     <table class="table table-hover">
       <tr>
-        <th>Тудушка</th> <th>Описание</th> <th>Комментарий</th> <th>Кто посмел</th> <th>Кто выполняет</th> <th>Дата</th> <th>Срок</th> 
+        <th>Название</th> <th>Описание</th> <th>Комментарий</th> <th>Автор</th> <th>Исполнитель</th> <th>Дата</th> <th>Срок</th> 
       </tr>
     {% for todo in myPastTodos %}
       <tr class="success">
@@ -37,11 +38,11 @@
   {% endif %}
   <hr />
 
-  <h4>Тудушки вашего авторства:</h4>
+  <h4>Задачи, добавленные вами:</h4>
   {% if todosByMe %}
     <table class="table table-hover">
       <tr>
-        <th>Тудушка</th> <th>Описание</th> <th>Комментарий</th> <th>Кому выдано</th> <th>Дата</th> <th>Срок</th> <th>Статус</th> <th>Удалить</th> 
+        <th>Название</th> <th>Описание</th> <th>Комментарий</th> <th>Исполнитель</th> <th>Дата</th> <th>Срок</th> <th>Статус</th> <th>Удалить</th> 
       </tr>
     {% for todo in todosByMe %}
       <tr class="{% if todo.done %}success{% else %}error{% endif %}">
@@ -53,6 +54,6 @@
     Ничего нет.
   {% endif %}
   <hr />
-  <a href="{% url 'todolist.views.add' %}">Добавить тудушку</a> <br />
+  <a href="{% url 'todolist.views.add' %}">Добавить задачу</a> <br />
   <a href="/logout/">Выйти</a><br />
 {% endblock %}

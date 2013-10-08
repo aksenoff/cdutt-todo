@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 {% block title %} Добавить {% endblock %}
 {% block content %}
-  <h1>Добавляем тудушку</h1>
+  <h1>Добавление задачи</h1>
   {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
   <form action="." method="post">
   {% csrf_token %}
-  <label for="todocaption">Имя тудушки:</label>
+  <label for="todocaption">Название задачи:</label>
     <input class="input-large" type="text" name="todocaption" maxlength="25">
     <span class="help-block">Максимум 25 символов. Это имя пользователи будут видеть в списке. Желательно сделать его коротким, но выразительным.</span>
     <label for="tododescription">Описание, если не сложно:</label>
@@ -14,7 +14,7 @@
     <label for="todocomment">Комментарий, если нужно:</label>
     <textarea rows="2" class="input-xxlarge" name="todocomment"></textarea>
     <span class="help-block">Вам еще есть что сказать? Это ваш шанс.</span>
-    <label for="forwhom">Кому:</label>
+    <label for="forwhom">Кому назначено выполнение:</label>
     <select multiple class="span4" name="forwhom">
     {% for user in users %}
         <option {% ifequal doer.id user.id %}selected{% endifequal %} value="{{ user.id }}"> {{ user.first_name }} {{ user.last_name }} ({{ user }}) </option>
@@ -30,7 +30,7 @@
       <i class="icon-ok"></i> Добавить
     </button>
   </form>
-  <a href="{% url 'todolist.views.index' %}">Обратно</a>
+  <a href="{% url 'todolist.views.index' %}">На главную</a>
   <br />
   <script type="text/javascript">
     $('.form_datetime').datetimepicker({

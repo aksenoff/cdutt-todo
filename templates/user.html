@@ -1,13 +1,13 @@
 {% extends "base.html" %}
-{% block title %} Пользователь {{ user.username }} {% endblock %}
+{% block title %} Пользователь {{ user.first_name }} {{ user.last_name }} ({{ user }}) {% endblock %}
 {% block content %}
-  <h1>{{ user.username }}</h1>
+  <h1>Пользователь {{ user.first_name }} {{ user.last_name }} ({{ user }})</h1>
   <hr />
-  <h4>Текущие тудушки для товарища {{ user.username }}:</h4>
+  <h4>Текущие задачи пользователя {{ user.first_name }} {{ user.last_name }} ({{ user }}):</h4>
     {% if todos %}
       <table class="table table-hover">
         <tr>
-          <th>Тудушка</th> <th>Описание</th> <th>Комментарий</th> <th>Кто посмел</th> <th>Кто выполняет</th> <th>Дата</th> <th>Срок</th>
+          <th>Название</th> <th>Описание</th> <th>Комментарий</th> <th>Автор</th> <th>Исполнитель</th> <th>Дата</th> <th>Срок</th>
         </tr>
       {% for todo in todos %}
         <tr class="error">
@@ -20,11 +20,11 @@
   {% endif %}
   <hr />
 
-  <h4>Выполненные тудушки товарища {{ user.username }}:</h4>
+  <h4>Выполненные задачи пользователя {{ user.first_name }} {{ user.last_name }} ({{ user }}):</h4>
   {% if doneTodos %}
     <table class="table table-hover">
       <tr>
-        <th>Тудушка</th> <th>Описание</th> <th>Комментарий</th> <th>Кто посмел</th> <th>Кто выполняет</th> <th>Дата</th> <th>Срок</th>
+        <th>Название</th> <th>Описание</th> <th>Комментарий</th> <th>Автор</th> <th>Исполнитель</th> <th>Дата</th> <th>Срок</th>
       </tr>
       {% for todo in doneTodos %}
         <tr class="success">
@@ -36,6 +36,6 @@
     Ничего нет.
   {% endif %}
   <hr />
-  <a href="{% url 'todolist.views.add' user.id %}">Добавить ему тудушку</a> <br />
-  <a href="{% url 'todolist.views.index' %}">Обратно</a> <br />
+  <a href="{% url 'todolist.views.add' user.id %}">Добавить задачу пользователю {{ user.first_name }} {{ user.last_name }} ({{ user }})</a> <br />
+  <a href="{% url 'todolist.views.index' %}">На главную</a> <br />
 {% endblock %}
