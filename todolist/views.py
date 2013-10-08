@@ -48,7 +48,7 @@ def add(request, user_id=None):
       
 @login_required(login_url="/login/")
 def user(request, user_id):
-  user = User.objects.get(pk=user_id)
+  user = get_object_or_404(User, pk=user_id)
   userTodos = Todo.objects.filter(doers=user, done=False)
   userDoneTodos = Todo.objects.filter(doers=user, done=True)
   if request.user == user:
@@ -59,7 +59,7 @@ def user(request, user_id):
   
 @login_required(login_url="/login/")
 def edit(request, todo_id):
-  todo = Todo.objects.get(pk=todo_id)
+  todo = get_object_or_404(Todo, pk=todo_id)
   if todo.author == request.user:
     if request.method != 'POST':
       return render_to_response('edit.html', {'todo': todo, 
@@ -78,14 +78,14 @@ def edit(request, todo_id):
 
 @login_required(login_url="/login/")
 def delete(request, todo_id):
-  todo = Todo.objects.get(pk=todo_id)
+  todo = get_object_or_404(Todo, pk=todo_id)
   if todo.author == request.user:
     todo.delete()
   return HttpResponseRedirect('/') # not allowed to delete others' todos
 
 @login_required(login_url="/login/")
 def submit(request, todo_id=None):
-  todo = Todo.objects.get(pk=todo_id)
+  todo = get_object_or_404(Todo, pk=todo_id)
   if request.user in todo.doers.all():
     todo.done = True
     todo.save()

@@ -19,7 +19,7 @@
     Ничего нет.
   {% endif %}
   <hr />
-  
+
   <h4>Выполненные тудушки товарища {{ user.username }}:</h4>
   {% if doneTodos %}
     <table class="table table-hover">
@@ -37,5 +37,5 @@
   {% endif %}
   <hr />
   <a href="{% url 'todolist.views.add' user.id %}">Добавить ему тудушку</a> <br />
-  <a href="{% url 'todolist.views.index' %}">Обратно</a>
+  <a href="{% url 'todolist.views.index' %}">Обратно</a> <br />
 {% endblock %}

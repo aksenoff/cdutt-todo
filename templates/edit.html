@@ -31,15 +31,16 @@
     </button>
   </form>
   <a href="{% url 'todolist.views.index' %}">Обратно</a>
-      <script type="text/javascript">
-      $('.form_datetime').datetimepicker({
-          language:  'ru',
-          weekStart: 1,
-          todayBtn:  1,
-          autoclose: 1,
-          todayHighlight: 1,
-          startView: 2,
-          forceParse: 0
-      });
+  <br />
+  <script type="text/javascript">
+    $('.form_datetime').datetimepicker({
+        language:  'ru',
+        weekStart: 1,
+        todayBtn:  1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        forceParse: 0
+    });
   </script>
 {% endblock %}

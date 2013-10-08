@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block title %} Вход в систему {% endblock %}
 {% block content %}
-<h1>Войти в систему</h1>
+<h1>Вход в систему</h1>
 {% if form.errors %}
     <p class="error">Сожалеем, вы неправильно ввели логин или пароль</p>
   {% endif %}
@@ -22,7 +22,7 @@
     </div>
     <div class="control-group">
       <div class="controls">
-        <input class="btn" type="submit" value="Войти" />
+        <button class="btn" type="submit"><i class="icon-user"></i> Войти</button>
         <input type="hidden" name="next" value="{{ next|escape }}" />
       </div>
     </div>    
