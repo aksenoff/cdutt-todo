@@ -12,4 +12,5 @@ class Todo(models.Model):
     author = models.ForeignKey(User, related_name='todos_by_user')
     doers = models.ManyToManyField(User, related_name='todos_for_user')
     done = models.BooleanField(default=False)
+    doer = models.ForeignKey(User, related_name='done_by_user')
 
